@@ -16,6 +16,29 @@ public class BusinessLogic {
 	private CartaDiCreditoDao cartaDiCreditoDao = null;
 	private EntityManager em = null;
 
+	
+	public BusinessLogic (EntityManager em ,UtenteDao utenteDao) {
+		setEm(em);
+		setUtenteDao(utenteDao);
+	}
+	
+	public UtenteDao getUtenteDao() {
+		return utenteDao;
+	}
+
+	public void setUtenteDao(UtenteDao utenteDao) {
+		this.utenteDao = utenteDao;
+	}
+
+	public EntityManager getEm() {
+		return em;
+	}
+
+
+	public void setEm(EntityManager em) {
+		this.em = em;
+	}
+
 	public BusinessLogic(UtenteDao utenteDao, RuoloDao ruoloDao, AutoDao autoDao, PatenteDao patenteDao, CartaDiCreditoDao cartaDiCreditoDao, EntityManager em) {
 		this.utenteDao = utenteDao;
 		this.ruoloDao = ruoloDao;
@@ -79,6 +102,8 @@ public class BusinessLogic {
 		}
 		return idRuolo;
 	}
+	
+	
 
 
 
