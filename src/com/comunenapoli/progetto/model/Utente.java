@@ -1,6 +1,7 @@
 package com.comunenapoli.progetto.model;
 
-import java.util.Date;
+import java.sql.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -11,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
 
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
@@ -45,11 +47,26 @@ public class Utente {
 	CartaDiCredito cartaDiCredito = null;
 
 
+    @PrePersist
+    public void prePersist() {
+       if (ruolo == null) {
+           ruolo = new Ruolo(3,"cliente");
+       }
+    }
+	
+	
 	public Utente () {
-		this(null,null, null, null, null, null, null);
+		this(null,null, null, null, null, null);
 	}
-
-
+	
+	public Utente(String username, String password, String nome, String cognome, Date dataNascita, Ruolo ruolo) {
+		setUsername(username);
+		setPassword(password);
+		setNome(nome);
+		setCognome(cognome);
+		setDataNascita(dataNascita);
+		setRuolo(ruolo);
+	}
 
 
 	public Utente(String username, String password, String nome, String cognome, Date dataNascita, Ruolo ruolo,
@@ -60,7 +77,8 @@ public class Utente {
 		setCognome(cognome);
 		setDataNascita(dataNascita);
 		setRuolo(ruolo);
-		setNoleggi(noleggi);
+		noleggi = new HashSet<Noleggio>();
+		
 	}
 
 	public Integer getIdUtente() {

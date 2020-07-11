@@ -12,7 +12,6 @@ import javax.persistence.OneToMany;
 @Entity
 public class Ruolo {
 	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Integer idRuolo=null;
 	
 	private String nomeRuolo = null;
@@ -21,12 +20,12 @@ public class Ruolo {
 	private Set<Utente> utenti = null;
 
 	public Ruolo() {
-		this(null);
+		this(null,null);
 	}
 	
-	
-	public Ruolo(String nomeRuolo) {
+	public Ruolo(Integer idRuolo, String nomeRuolo) {
 		utenti = new HashSet<Utente>();
+		setId(idRuolo);
 		setNomeRuolo(nomeRuolo);
 	}
 

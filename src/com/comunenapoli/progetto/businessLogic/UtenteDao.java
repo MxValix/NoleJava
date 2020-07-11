@@ -65,5 +65,45 @@ public class UtenteDao implements DaoInterface<Utente> {
 		return utente.getRuolo().getId();
 	}
 	
+	public boolean checkUsername(String username){
+		boolean isPresente = false;
+		Utente utente = manager.createQuery("select u from Utente u where u.username = :x",Utente.class).
+				setParameter("x",username).getSingleResult();
+		if (utente!=null) {
+			isPresente = true;
+		}
+		return isPresente;
+	}
+	
+	public boolean checkVerificaById(Integer idUtente){
+		boolean isPresente = false;
+		Utente utente = manager.createQuery("select u from Utente u where u.idUtente = :x",Utente.class).
+				setParameter("x",idUtente).getSingleResult();
+		if (utente!=null) {
+			isPresente = utente.getIsVerificato();
+		}
+		return isPresente;
+	}
+
+	public Utente findUtenteByIdUtente(Integer idUtente) {
+		Utente utente = manager.createQuery("select u from Utente u where u.idUtente = :x",Utente.class).
+				setParameter("x",idUtente).getSingleResult();
+		return utente;
+	}
+	
+	public List<Utente> findByIsVerificato(){
+		List<Utente> utenti = manager.createQuery("select u from Utente u where u.isVerificato = 0 ",Utente.class).getResultList();
+		return utenti;
+	}
+	
+	/*
+	public void updateVerifica(Utente utente){
+		boolean isPresente = false;
+		boolean isVerificato = utente.getIsVerificato();
+		Integer idUtente = utente.getIdUtente();
+		manager.createQuery("update Utente u set u.isVerificato = :x where u.idUtente = :y").
+				setParameter("x",true).setParameter("y",idUtente);	
+	}
+	*/
 		
 }
