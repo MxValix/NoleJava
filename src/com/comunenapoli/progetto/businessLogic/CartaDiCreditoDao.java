@@ -48,4 +48,18 @@ public class CartaDiCreditoDao implements DaoInterface<CartaDiCredito> {
 	public void delete(CartaDiCredito cartaDiCredito) {
 		manager.remove(cartaDiCredito);
 	}
+	
+	public CartaDiCredito findCartaByIdUtente(Integer idUtente) {
+		CartaDiCredito carta = manager.createQuery("select c from CartaDiCredito c where c.utente_idUtente = :x",CartaDiCredito.class).
+				setParameter("x",idUtente).getSingleResult();
+		return carta;
+	}
+	
+	public CartaDiCredito findCartaByNumeroCarta(String numeroCarta) {
+		CartaDiCredito carta = manager.createQuery("select c from CartaDiCredito c where c.numeroCarta = :x",CartaDiCredito.class).
+				setParameter("x",numeroCarta).getSingleResult();
+		return carta;
+	}
+	
+	
 }

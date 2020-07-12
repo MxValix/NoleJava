@@ -67,7 +67,7 @@ public class RegistrazioneServlet extends HttpServlet {
 		boolean checkCondizioni = checkNome && checkCognome && checkDataNascita && checkEmail && checkPassword;		
 		Integer checkRegistrazione = Costanti.ERRORE_GENERICO;
 		try {
-			if (checkCondizioni && businessLogicUtente.dataDiNascita(dataNascitaString)) {
+			if (checkCondizioni && DataUtils.dataDiNascita(dataNascitaString)) {
 				Date dataNascita = DataUtils.convertiDataFromString(dataNascitaString);
 				Ruolo ruoloUtente = new Ruolo();
 				if (isStaff) {

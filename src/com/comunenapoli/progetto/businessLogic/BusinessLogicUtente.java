@@ -1,7 +1,5 @@
 package com.comunenapoli.progetto.businessLogic;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -9,6 +7,7 @@ import javax.persistence.EntityManager;
 import com.comunenapoli.progetto.model.Ruolo;
 import com.comunenapoli.progetto.model.Utente;
 import com.comunenapoli.progetto.utils.Costanti;
+import com.comunenapoli.progetto.utils.DataUtils;
 
 
 public class BusinessLogicUtente {
@@ -37,13 +36,6 @@ public class BusinessLogicUtente {
 	public void setEm(EntityManager em) {
 		this.em = em;
 	}
-
-	/*
-	  public BusinessLogicUtente(UtenteDao utenteDao, EntityManager em) {
-		this.utenteDao = utenteDao;
-		this.em = em;
-	}
-	*/
 
 
 	public Integer getRuolo(String user,String passw) {
@@ -210,7 +202,7 @@ public class BusinessLogicUtente {
 	public Integer registrazione (Utente utente) throws Exception {
 		String dataNascitaString = utente.getDataNascita().toString();
 		String username = utente.getUsername();
-		boolean checkData = dataDiNascita(dataNascitaString);
+		boolean checkData = DataUtils.dataDiNascita(dataNascitaString);
 		boolean checkUsername = utenteDao.checkUsername(username);
 		if (checkData && !checkUsername) {
 			create(utente);
@@ -223,42 +215,6 @@ public class BusinessLogicUtente {
 				return Costanti.REGISTRAZIONE_FALLITA_ETA;
 			}
 		}
-	}
-	
-	
-	public boolean dataDiNascita(String dataNascitaString) throws Exception {
-		Date dateOggi = new Date();
-	    SimpleDateFormat formatter=new SimpleDateFormat("dd-MMM-yyyy");  
-		Date dataNascita = formatter.parse(dataNascitaString);
-		Integer confrontaAnno = dateOggi.getYear() - dataNascita.getYear();
-		if (confrontaAnno<18) {
-			return false;
-		}
-		else if (confrontaAnno>18) {
-			return true;
-		}
-		else if (confrontaAnno==18) {
-			boolean mesePassato = dateOggi.getMonth() > dataNascita.getMonth();
-			boolean meseCorrente = dateOggi.getMonth() == dataNascita.getMonth();
-			boolean meseFuturo = dateOggi.getMonth() < dataNascita.getMonth();
-
-			if (mesePassato) {
-				return true;
-			}
-			else if (meseCorrente) {
-				boolean giornoPassato = dateOggi.getMonth() >= dataNascita.getMonth();
-				boolean giornoFuturo = dateOggi.getMonth() < dataNascita.getMonth();
-				if (giornoPassato) {
-					return true;
-				}
-				else if (giornoFuturo) {
-					return false;
-				}
-			} else if (meseFuturo){
-				return false;
-			}
-		}
-		return false;
 	}
 	
 	

@@ -48,4 +48,19 @@ public class PatenteDao implements DaoInterface<Patente> {
 	public void delete(Patente patente) {
 		manager.remove(patente);
 	}
+	
+	public Patente findPatenteByIdUtente(Integer idUtente) {
+		Patente patente = manager.createQuery("select p from Patente p where p.utente_idUtente = :x",Patente.class).
+				setParameter("x",idUtente).getSingleResult();
+		return patente;
+	}
+	
+	public Patente findPatenteByNumeroPatente(String numeroPatente) {
+		Patente patente = manager.createQuery("select p from Patente p where p.numeroPatente = :x",Patente.class).
+				setParameter("x",numeroPatente).getSingleResult();
+		return patente;
+	}
+	
+	
+	
 }

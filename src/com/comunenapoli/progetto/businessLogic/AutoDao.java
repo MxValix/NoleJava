@@ -69,6 +69,12 @@ public class AutoDao implements DaoInterface<Auto> {
 				setParameter("x",numeroPosti).getResultList();
 	}
 
+	public Auto findByIdAuto(Integer idAuto){
+		Auto auto = manager.createQuery("select a from Auto a where a.idAuto = :x ",Auto.class).
+				setParameter("x",idAuto).getSingleResult();
+		return auto;
+	}
+
 
 	
 }

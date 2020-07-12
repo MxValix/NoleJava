@@ -13,6 +13,7 @@ public interface Costanti {
 
 
 	public final static String USER_IN_SESSION = "sessionUser";
+	public final static String AUTO_IN_SESSION = "sessionAuto";
 	public final static String CHIAVE_RUOLO_SESSIONE = "chiaveSessione";
 	
 	
@@ -27,8 +28,9 @@ public interface Costanti {
 	public static final String BUSINESS_LOGIC_RUOLO = "businessLogicRuolo"; 
 	public static final String BUSINESS_LOGIC_AUTO = "businessLogicAuto"; 
 	public static final String BUSINESS_LOGIC_NOLEGGIO = "businessLogicNoleggio"; 
-	public static final String BUSINESS_LOGIC_PATENTE_CARTA = "businessLogicPatenteCarta"; 
-	
+	public static final String BUSINESS_LOGIC_PATENTE = "businessLogicPatente"; 
+	public static final String BUSINESS_LOGIC_CARTA = "businessLogicCarta"; 
+
 	
 	public final static Integer REGISTRAZIONE_VALIDA = 1;
 	public final static Integer REGISTRAZIONE_FALLITA_UTENTE_ESISTENTE = 0;
@@ -36,8 +38,5 @@ public interface Costanti {
 	
 	public final static Integer ERRORE_GENERICO = -2;
 	public final static Integer MODIFICA_FALLITA = 0;
-
-	
-
 
 }
