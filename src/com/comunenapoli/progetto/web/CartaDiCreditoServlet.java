@@ -1,6 +1,7 @@
 package com.comunenapoli.progetto.web;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.time.LocalDateTime;
 
 import javax.servlet.ServletException;
@@ -9,14 +10,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.comunenapoli.progetto.businessLogic.BusinessLogicAuto;
-import com.comunenapoli.progetto.model.Auto;
+import com.comunenapoli.progetto.businessLogic.BusinessLogicCarta;
+import com.comunenapoli.progetto.model.Utente;
 import com.comunenapoli.progetto.utils.Costanti;
 
 
 
-@WebServlet("/autoServlet")
-public class AutoServlet extends HttpServlet {
+@WebServlet("/cartaServlet")
+public class CartaDiCreditoServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
@@ -31,14 +32,19 @@ public class AutoServlet extends HttpServlet {
 			throws ServletException, IOException {
 		response.setHeader("Last-modified", LocalDateTime.now().toString());
 		response.setHeader("Cache-control", "no-store");
-		BusinessLogicAuto businessLogicAuto = (BusinessLogicAuto) getServletContext().getAttribute(Costanti.BUSINESS_LOGIC_AUTO);
-		String idAutoString = request.getParameter("bottone");
-		Integer idAuto = Integer.valueOf(idAutoString);
-		Auto auto = businessLogicAuto.getAutoByIdAuto(idAuto);
-		//businessLogicAuto.setDisponibilitaFalse(idAuto);
-		request.getSession().setAttribute(Costanti.AUTO_IN_SESSION, auto);
+		Utente utente = (Utente) getServletContext().getAttribute(Costanti.USER_IN_SESSION);
+		Integer idUtente = utente.getIdUtente();
+		BusinessLogicCarta businessLogicCarta = (BusinessLogicCarta) getServletContext().getAttribute(Costanti.BUSINESS_LOGIC_CARTA);
+		String dataDiScadenza = request.getParameter("datascadenza");
+		String numeroCarta = request.getParameter("numerocarta");
+		try {
+			businessLogicCarta.operazioneCarta(idUtente, dataDiScadenza, numeroCarta);
+			 //TODO vai a noleggioServlet e procedi con l'ultima parte di noleggio
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-	
 
 }
 

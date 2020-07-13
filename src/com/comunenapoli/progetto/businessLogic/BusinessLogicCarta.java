@@ -1,6 +1,7 @@
 package com.comunenapoli.progetto.businessLogic;
 
 import java.sql.Date;
+import java.text.ParseException;
 
 import javax.persistence.EntityManager;
 
@@ -98,19 +99,32 @@ public class BusinessLogicCarta {
 	
 	public Integer responsoCarta(Integer idUtente) throws Exception {
 		CartaDiCredito carta = getCartaByIdUtente(idUtente);
-		boolean isPatenteValida = false;
+		boolean isCartaValid = false;
 		if (carta==null) {
 			return -1;
 		}
 		else {
 			Date dataScadenza = carta.getDataDiScadenza();
-			isPatenteValida = isCartaValid(dataScadenza);
-			if (isPatenteValida) {
+			isCartaValid = isCartaValid(dataScadenza);
+			if (isCartaValid) {
 				return 1;
 			}
 		}
 		return 0;	
 	}
 	
+	public void operazioneCarta(Integer idUtente, String dataScadenzaString, String numeroCarta) throws ParseException {
+		CartaDiCredito carta = cartaDao.findCartaByNumeroCarta(numeroCarta);
+		boolean isNuovaCarta = carta == null;
+		Date dataScadenza = DataUtils.convertiDataFromString(dataScadenzaString);
+		carta.setDataDiScadenza(dataScadenza);
+		if (isNuovaCarta) {
+			carta.setNumeroCarta(numeroCarta);
+			create(carta);
+		}
+		else {
+			update(carta);
+		}
+	}
 
 }

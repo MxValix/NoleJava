@@ -19,13 +19,28 @@ public class Noleggio {
 	private Date dataPrenotazione = null;	
 	private Date dataInizio = null;
 	private Date dataFine = null;
-
+	private Boolean isDisponibile = true;
 	
 	@ManyToOne
 	private Utente utente = null;
 	
-	@OneToOne(mappedBy="noleggio")
+	@OneToOne
 	private Auto auto = null;
+	
+	public Noleggio() {
+		this(null,null,null,null,null);
+	}
+	
+
+	public Noleggio(Date dataPrenotazione, Date dataInizio, Date dataFine, Utente utente,
+			Auto auto) {
+		super();
+		this.dataPrenotazione = dataPrenotazione;
+		this.dataInizio = dataInizio;
+		this.dataFine = dataFine;
+		this.utente = utente;
+		this.auto = auto;
+	}
 
 	public Integer getIdNoleggio() {
 		return idNoleggio;
@@ -74,6 +89,15 @@ public class Noleggio {
 	public void setAuto(Auto auto) {
 		this.auto = auto;
 	}
+	
+	public Boolean getIsDisponibile() {
+		return isDisponibile;
+	}
+
+	public void setIsDisponibile(Boolean isDisponibile) {
+		this.isDisponibile = isDisponibile;
+	}
+
 
 	@Override
 	public int hashCode() {
@@ -84,9 +108,11 @@ public class Noleggio {
 		result = prime * result + ((dataInizio == null) ? 0 : dataInizio.hashCode());
 		result = prime * result + ((dataPrenotazione == null) ? 0 : dataPrenotazione.hashCode());
 		result = prime * result + ((idNoleggio == null) ? 0 : idNoleggio.hashCode());
+		result = prime * result + ((isDisponibile == null) ? 0 : isDisponibile.hashCode());
 		result = prime * result + ((utente == null) ? 0 : utente.hashCode());
 		return result;
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -122,6 +148,11 @@ public class Noleggio {
 				return false;
 		} else if (!idNoleggio.equals(other.idNoleggio))
 			return false;
+		if (isDisponibile == null) {
+			if (other.isDisponibile != null)
+				return false;
+		} else if (!isDisponibile.equals(other.isDisponibile))
+			return false;
 		if (utente == null) {
 			if (other.utente != null)
 				return false;
@@ -129,7 +160,7 @@ public class Noleggio {
 			return false;
 		return true;
 	}
-	
+
 	
 
 }

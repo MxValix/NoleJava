@@ -1,32 +1,30 @@
 package com.comunenapoli.progetto.utils;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.sql.Date;
-import java.util.Set;
+import java.time.LocalDate;
 
 import javax.persistence.EntityManager;
 
-import com.comunenapoli.progetto.businessLogic.BusinessLogicUtente;
-import com.comunenapoli.progetto.businessLogic.UtenteDao;
-import com.comunenapoli.progetto.model.Ruolo;
-import com.comunenapoli.progetto.model.Utente;
-
+import com.comunenapoli.progetto.businessLogic.BusinessLogicNoleggio;
+import com.comunenapoli.progetto.businessLogic.CalendarioChiusureDao;
+import com.comunenapoli.progetto.businessLogic.NoleggioDao;
 
 public class Main {
 	
 	public static void main(String[] args) {
 		
 		EntityManager entityManager = EntityManagerUtils.apriConnessione();
-		
+		CalendarioChiusureDao calendarioChiusureDao = new CalendarioChiusureDao(entityManager);
+		NoleggioDao noleggioDao = new NoleggioDao(entityManager);
 		BusinessLogicRuoloUtils.generaRuoli(entityManager);
-		
-		UtenteDao utenteDao = new UtenteDao(entityManager);
-		
-	    BusinessLogicUtente businessLogic = new BusinessLogicUtente(entityManager,utenteDao);
+		BusinessLogicNoleggio businessLogicNoleggio = new BusinessLogicNoleggio(entityManager,noleggioDao,calendarioChiusureDao);
+		//UtenteDao utenteDao = new UtenteDao(entityManager);
+	    LocalDate dataNascitaLD = LocalDate.of(1993, 05, 19);
+	    Date dataNascita = DataUtils.convertiDataFromLocalDate(dataNascitaLD);
+	    //BusinessLogicUtente businessLogicUtente = new BusinessLogicUtente(entityManager,utenteDao);
 	    BusinessLogicUtenteUtils.creaAdmin(entityManager);
+		businessLogicNoleggio.deleteNoleggiByDataInizio(dataNascita);
+
 	    /*
 	    String username = "prova@gmail.com";
 	    String password = "1dssjd";

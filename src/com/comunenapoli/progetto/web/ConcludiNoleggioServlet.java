@@ -9,14 +9,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.comunenapoli.progetto.businessLogic.BusinessLogicAuto;
 import com.comunenapoli.progetto.model.Auto;
+import com.comunenapoli.progetto.model.Utente;
 import com.comunenapoli.progetto.utils.Costanti;
 
 
-
-@WebServlet("/autoServlet")
-public class AutoServlet extends HttpServlet {
+@WebServlet("/concludiNoleggioServlet")
+public class ConcludiNoleggioServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
@@ -31,14 +30,11 @@ public class AutoServlet extends HttpServlet {
 			throws ServletException, IOException {
 		response.setHeader("Last-modified", LocalDateTime.now().toString());
 		response.setHeader("Cache-control", "no-store");
-		BusinessLogicAuto businessLogicAuto = (BusinessLogicAuto) getServletContext().getAttribute(Costanti.BUSINESS_LOGIC_AUTO);
-		String idAutoString = request.getParameter("bottone");
-		Integer idAuto = Integer.valueOf(idAutoString);
-		Auto auto = businessLogicAuto.getAutoByIdAuto(idAuto);
-		//businessLogicAuto.setDisponibilitaFalse(idAuto);
-		request.getSession().setAttribute(Costanti.AUTO_IN_SESSION, auto);
-	}
+		Utente utente = (Utente) request.getSession().getAttribute(Costanti.USER_IN_SESSION);
+		Auto auto = (Auto) request.getSession().getAttribute(Costanti.AUTO_IN_SESSION);
+
 	
+	}
 
 }
 

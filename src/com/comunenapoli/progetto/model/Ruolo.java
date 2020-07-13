@@ -16,6 +16,10 @@ public class Ruolo {
 
 	@OneToMany(mappedBy="ruolo")
 	private Set<Utente> utenti = null;
+	
+	@OneToMany(mappedBy="ruoloCalendario")
+	private Set<CalendarioChiusure> calendariChiusure = null;
+	
 
 	public Ruolo() {
 		this(null,null);

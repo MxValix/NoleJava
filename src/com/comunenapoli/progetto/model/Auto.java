@@ -33,9 +33,8 @@ public class Auto implements Serializable{
 	private String tipoCarburante = null;
 	private Double prezzoPerGiorno = null;
 	private String urlImg = null;
-	private Boolean isDisponibile = true;
 	
-	@OneToOne
+	@OneToOne(mappedBy="auto")
 	private Noleggio noleggio =null;
 	
 	public Auto() {
@@ -156,15 +155,6 @@ public class Auto implements Serializable{
 		this.urlImg = urlImg;
 	}
 
-	public Boolean getIsDisponibile() {
-		return isDisponibile;
-	}
-
-	public void setIsDisponibile(Boolean isDisponibile) {
-		this.isDisponibile = isDisponibile;
-	}
-
-
 	public Noleggio getNoleggio() {
 		return noleggio;
 	}
@@ -183,7 +173,6 @@ public class Auto implements Serializable{
 		result = prime * result + ((cilindrata == null) ? 0 : cilindrata.hashCode());
 		result = prime * result + ((colore == null) ? 0 : colore.hashCode());
 		result = prime * result + ((idAuto == null) ? 0 : idAuto.hashCode());
-		result = prime * result + ((isDisponibile == null) ? 0 : isDisponibile.hashCode());
 		result = prime * result + ((marca == null) ? 0 : marca.hashCode());
 		result = prime * result + ((modello == null) ? 0 : modello.hashCode());
 		result = prime * result + ((noleggio == null) ? 0 : noleggio.hashCode());
@@ -225,11 +214,6 @@ public class Auto implements Serializable{
 			if (other.idAuto != null)
 				return false;
 		} else if (!idAuto.equals(other.idAuto))
-			return false;
-		if (isDisponibile == null) {
-			if (other.isDisponibile != null)
-				return false;
-		} else if (!isDisponibile.equals(other.isDisponibile))
 			return false;
 		if (marca == null) {
 			if (other.marca != null)

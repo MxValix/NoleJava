@@ -1,14 +1,9 @@
 package com.comunenapoli.progetto.businessLogic;
 
-import java.sql.Date;
 
 import javax.persistence.EntityManager;
 
 import com.comunenapoli.progetto.model.Auto;
-import com.comunenapoli.progetto.model.Patente;
-import com.comunenapoli.progetto.model.Utente;
-import com.comunenapoli.progetto.utils.DataUtils;
-
 
 public class BusinessLogicAuto {
 
@@ -25,18 +20,13 @@ public class BusinessLogicAuto {
 		return autoDao;
 	}
 
-
-
 	public void setAutoDao(AutoDao autoDao) {
 		this.autoDao = autoDao;
 	}
 
-
-
 	public EntityManager getEm() {
 		return em;
 	}
-
 
 	public void setEm(EntityManager em) {
 		this.em = em;
@@ -85,4 +75,6 @@ public class BusinessLogicAuto {
 		Auto auto = autoDao.findByIdAuto(idAuto);
 		return auto;
 	}
+
+	
 }

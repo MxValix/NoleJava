@@ -21,7 +21,7 @@ public class BusinessLogicUtente {
 	}
 
 	public UtenteDao getUtenteDao() {
-		return utenteDao;
+		return utenteDao; 
 	}
 
 	public void setUtenteDao(UtenteDao utenteDao) {
@@ -185,8 +185,7 @@ public class BusinessLogicUtente {
 
 	//TODO aggiustare quando utente già è staff
 	public boolean updateRuolo(Utente utente, Integer idRuolo) {
-		Integer ruoloStaff = 2;
-		Integer ruoloCliente = 3;
+		Integer ruoloStaff = Costanti.ID_RUOLO_STAFF;
 		boolean checkPromozione = idRuolo == ruoloStaff;
 		if (checkPromozione) {
 			Ruolo ruolo = new Ruolo();
