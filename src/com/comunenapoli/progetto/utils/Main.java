@@ -6,8 +6,11 @@ import java.time.LocalDate;
 import javax.persistence.EntityManager;
 
 import com.comunenapoli.progetto.businessLogic.BusinessLogicNoleggio;
+import com.comunenapoli.progetto.businessLogic.BusinessLogicUtente;
 import com.comunenapoli.progetto.businessLogic.CalendarioChiusureDao;
 import com.comunenapoli.progetto.businessLogic.NoleggioDao;
+import com.comunenapoli.progetto.businessLogic.UtenteDao;
+import com.comunenapoli.progetto.model.Utente;
 
 public class Main {
 	
@@ -18,13 +21,14 @@ public class Main {
 		NoleggioDao noleggioDao = new NoleggioDao(entityManager);
 		BusinessLogicRuoloUtils.generaRuoli(entityManager);
 		BusinessLogicNoleggio businessLogicNoleggio = new BusinessLogicNoleggio(entityManager,noleggioDao,calendarioChiusureDao);
-		//UtenteDao utenteDao = new UtenteDao(entityManager);
+		UtenteDao utenteDao = new UtenteDao(entityManager);
 	    LocalDate dataNascitaLD = LocalDate.of(1993, 05, 19);
 	    Date dataNascita = DataUtils.convertiDataFromLocalDate(dataNascitaLD);
-	    //BusinessLogicUtente businessLogicUtente = new BusinessLogicUtente(entityManager,utenteDao);
+	    BusinessLogicUtente businessLogicUtente = new BusinessLogicUtente(entityManager,utenteDao);
 	    BusinessLogicUtenteUtils.creaAdmin(entityManager);
 		businessLogicNoleggio.deleteNoleggiByDataInizio(dataNascita);
-
+		Utente utente = businessLogicUtente.getUtenteById(1);
+		System.out.println(utente.getUsername() + "username");
 	    /*
 	    String username = "prova@gmail.com";
 	    String password = "1dssjd";

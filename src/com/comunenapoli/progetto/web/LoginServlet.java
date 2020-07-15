@@ -14,7 +14,7 @@ import com.comunenapoli.progetto.model.Utente;
 import com.comunenapoli.progetto.utils.Costanti;
 
 
-@WebServlet("/login")
+@WebServlet("/loginServlet")
 public class LoginServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -44,6 +44,7 @@ public class LoginServlet extends HttpServlet {
 			if (utente!=null) {
 				Integer ruolo = businessLogicUtente.checkRuolo(utente.getIdUtente());
 				request.getSession().setAttribute(Costanti.USER_IN_SESSION, utente);
+				System.out.println("Ok, ho fatto il login");
 				if (ruolo == Costanti.ID_RUOLO_ADMIN) {
 					//TODO reindirizza ad admin
 				}

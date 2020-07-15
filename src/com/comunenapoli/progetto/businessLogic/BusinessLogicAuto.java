@@ -1,6 +1,9 @@
 package com.comunenapoli.progetto.businessLogic;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import com.comunenapoli.progetto.model.Auto;
@@ -75,6 +78,37 @@ public class BusinessLogicAuto {
 		Auto auto = autoDao.findByIdAuto(idAuto);
 		return auto;
 	}
+	
+	public List<Auto> getAutoDisponibili(List<Integer> idAutoNonDisponibiliList){
+		List<Auto> listaCompletaAuto = autoDao.retrieve();
+		boolean checkListaCompletaAuto = listaCompletaAuto!=null && !listaCompletaAuto.isEmpty(); 
+		if(checkListaCompletaAuto) {
+				List<Auto> autoNonDisponibili = getAutoNonDisponibili(idAutoNonDisponibiliList);
+				listaCompletaAuto.removeAll(autoNonDisponibili);
+		}
+		return listaCompletaAuto;
+	}
+	
+	public List<Auto> getAutoNonDisponibili(List<Integer> idAutoNonDisponibiliList){
+		List<Auto> autoNonDisponibili = new ArrayList<Auto>();
+		boolean checkautoNonDisponibili = idAutoNonDisponibiliList!=null && !idAutoNonDisponibiliList.isEmpty(); 
+		if(checkautoNonDisponibili) {
+			for (int i=0; i<idAutoNonDisponibiliList.size();i++) {		
+				Integer idAuto = idAutoNonDisponibiliList.get(i);
+				Auto auto = autoDao.findByIdAuto(idAuto);
+				autoNonDisponibili.add(auto);
+			}
+		}	
+		return autoNonDisponibili;
+	}
+	
+	public List<Auto> getListaCompletaAuto(){
+		List<Auto> listaAuto = autoDao.retrieve();
+	return listaAuto;	
+	}
+	
+	
+	
 
 	
 }

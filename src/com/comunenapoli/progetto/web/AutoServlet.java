@@ -35,7 +35,6 @@ public class AutoServlet extends HttpServlet {
 		String idAutoString = request.getParameter("bottone");
 		Integer idAuto = Integer.valueOf(idAutoString);
 		Auto auto = businessLogicAuto.getAutoByIdAuto(idAuto);
-		//businessLogicAuto.setDisponibilitaFalse(idAuto);
 		request.getSession().setAttribute(Costanti.AUTO_IN_SESSION, auto);
 	}
 	

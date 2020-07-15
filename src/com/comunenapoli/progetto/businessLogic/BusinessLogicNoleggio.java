@@ -2,13 +2,14 @@ package com.comunenapoli.progetto.businessLogic;
 
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 
 import com.comunenapoli.progetto.model.CalendarioChiusure;
 import com.comunenapoli.progetto.model.Noleggio;
-import com.comunenapoli.progetto.utils.Costanti;
 
 public class BusinessLogicNoleggio {
 
@@ -174,19 +175,6 @@ public class BusinessLogicNoleggio {
 		return checkEliminato;
 	}
 	
-	public boolean deleteNoleggiByIdAuto(Integer idAuto) {
-		List<Noleggio> noleggi = noleggioDao.findNoleggiByIdAuto(idAuto);
-		boolean checkEliminato = false;
-		if (noleggi!=null) {
-			for (int i=0; i<noleggi.size(); i++) {
-				Noleggio noleggio = noleggi.get(i);
-				delete(noleggio);
-			}
-			checkEliminato = true;
-		}
-		return checkEliminato;
-	}
-	
 	public boolean deleteNoleggiByDataInizio(Date dataChiusura) {
 		List<Noleggio> noleggi = noleggioDao.findNoleggiByDataInizio(dataChiusura);
 		boolean checkEliminato = false;
@@ -199,8 +187,53 @@ public class BusinessLogicNoleggio {
 		}
 		CalendarioChiusure calendarioChiusure = new CalendarioChiusure (dataChiusura, dataChiusura);
 	    createCalendario(calendarioChiusure);
+	    
 		// TODO il caso in cui non c'è noleggio, deve inserirlo con isDisponibile false
 		return checkEliminato;
 	}
+	
+	
+	public boolean deleteNoleggiByIdAuto(Integer idAuto) {
+		//controllo sulla daa
+		List<Noleggio> noleggi = noleggioDao.findNoleggiByIdAuto(idAuto);
+		Date dataCorrente = Date.valueOf(LocalDate.now());
+		boolean checkEliminato = false;
+		if (noleggi!=null) {
+			for (int i=0; i<noleggi.size(); i++) {
+				Noleggio noleggio = noleggi.get(i);
+				if (dataCorrente.before(noleggio.getDataInizio())) {
+					delete(noleggio);
+				}
+			}
+			checkEliminato = true;
+		}
+		return checkEliminato;
+	}
+	
+	public boolean deleteNoleggiByDataInizioDataFine(Date dataInizioChiusura, Date dataFineChiusura) {
+		List<Noleggio> noleggi = noleggioDao.findNoleggiByDataInizioDataFine(dataInizioChiusura, dataFineChiusura);
+		boolean checkEliminato = false;
+		if (noleggi!=null) {
+			for (int i=0; i<noleggi.size(); i++) {
+				Noleggio noleggio = noleggi.get(i);
+				delete(noleggio);
+			}
+			checkEliminato = true;
+		}
+		CalendarioChiusure calendarioChiusure = new CalendarioChiusure (dataInizioChiusura, dataFineChiusura);
+	    createCalendario(calendarioChiusure);
+	    return checkEliminato;
+	}
+	
+	public List<Integer> getIdAutoNonDisponibili(Date dataInizioNoleggio, Date dataFineNoleggio){
+		List<Noleggio> noleggi = noleggioDao.findNoleggiByDataInizioDataFine(dataInizioNoleggio, dataFineNoleggio);
+		List<Integer> idAutoNonDisponibili = new ArrayList<Integer>();
+		for (int i=0;i <noleggi.size(); i++) {
+			Noleggio noleggio = noleggi.get(i);
+			idAutoNonDisponibili.add(noleggio.getAuto().getIdAuto());
+		}
+		return idAutoNonDisponibili;
+	}
+	
 	
 }

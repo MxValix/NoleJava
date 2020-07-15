@@ -3,6 +3,7 @@ package com.comunenapoli.progetto.businessLogic;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 import com.comunenapoli.progetto.model.Utente;
 
@@ -65,14 +66,12 @@ public class UtenteDao implements DaoInterface<Utente> {
 		return utente.getRuolo().getId();
 	}
 	
+	/* Controlla se l'utente è presente nel sistema, se è presente ritorna true altrimenti false */
 	public boolean checkUsername(String username){
-		boolean isPresente = false;
-		Utente utente = manager.createQuery("select u from Utente u where u.username = :x",Utente.class).
-				setParameter("x",username).getSingleResult();
-		if (utente!=null) {
-			isPresente = true;
-		}
-		return isPresente;
+		TypedQuery<Utente> query = manager.createQuery("select u from Utente u where u.username = :x",Utente.class);
+		Utente utente = query.setParameter("x",username).getResultList().stream().findFirst().orElse(null);
+		boolean checkUtente = utente!=null;
+		return checkUtente;
 	}
 	
 	public boolean checkVerificaById(Integer idUtente){
@@ -87,7 +86,7 @@ public class UtenteDao implements DaoInterface<Utente> {
 
 	public Utente findUtenteByIdUtente(Integer idUtente) {
 		Utente utente = manager.createQuery("select u from Utente u where u.idUtente = :x",Utente.class).
-				setParameter("x",idUtente).getSingleResult();
+				setParameter("x",idUtente).getResultList().get(0);
 		return utente;
 	}
 	

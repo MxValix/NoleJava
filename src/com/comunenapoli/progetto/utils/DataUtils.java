@@ -13,8 +13,9 @@ public class DataUtils {
 	}
 	
 	public static Date convertiDataFromString(String dataString) throws ParseException {
-	    SimpleDateFormat formatter=new SimpleDateFormat("dd-MMM-yyyy");  
-		Date date = (Date) formatter.parse(dataString);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        java.util.Date utilDate = formatter.parse(dataString);
+        java.sql.Date date = new java.sql.Date(utilDate.getTime());
 	    return date;
 	}
 	

@@ -199,11 +199,11 @@ public class BusinessLogicUtente {
 	
 	
 	public Integer registrazione (Utente utente) throws Exception {
-		String dataNascitaString = utente.getDataNascita().toString();
 		String username = utente.getUsername();
-		boolean checkData = DataUtils.dataDiNascita(dataNascitaString);
 		boolean checkUsername = utenteDao.checkUsername(username);
-		if (checkData && !checkUsername) {
+		System.out.println(utente);
+		System.out.println(utente.getNome() + "nome");
+		if (!checkUsername) {
 			create(utente);
 			return Costanti.REGISTRAZIONE_VALIDA;
 		} else {

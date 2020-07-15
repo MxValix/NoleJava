@@ -2,6 +2,7 @@ package com.comunenapoli.progetto.web;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.servlet.ServletException;
@@ -17,7 +18,7 @@ import com.comunenapoli.progetto.utils.Costanti;
 import com.comunenapoli.progetto.utils.DataUtils;
 
 
-@WebServlet("/registrazione")
+@WebServlet("/registrazioneServlet")
 public class RegistrazioneServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -34,6 +35,7 @@ public class RegistrazioneServlet extends HttpServlet {
 		response.setHeader("Last-modified", LocalDateTime.now().toString());
 		response.setHeader("Cache-control", "no-store");
 		Integer effettuaRegistrazione = effettuaRegistrazione(request);
+		System.out.println("Nuovo utente creato");
 		if (effettuaRegistrazione == Costanti.REGISTRAZIONE_VALIDA) {
 			//TODO registrazione avvenuta con successo, attendi conferma
 		}
@@ -58,6 +60,10 @@ public class RegistrazioneServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		String staff = request.getParameter("staff");
+		System.out.println("nome " + nome);
+		System.out.println("cognome " + cognome);
+		System.out.println("email " + email);
+
 		boolean checkNome = nome!=null && !nome.equals("");
 		boolean checkCognome = cognome!=null && !cognome.equals("");
 		boolean checkDataNascita = dataNascitaString!=null && !dataNascitaString.equals("");
@@ -66,9 +72,10 @@ public class RegistrazioneServlet extends HttpServlet {
 		boolean isStaff = staff!=null && !staff.equals("");
 		boolean checkCondizioni = checkNome && checkCognome && checkDataNascita && checkEmail && checkPassword;		
 		Integer checkRegistrazione = Costanti.ERRORE_GENERICO;
+		System.out.println("effettua");
 		try {
-			if (checkCondizioni && DataUtils.dataDiNascita(dataNascitaString)) {
-				Date dataNascita = DataUtils.convertiDataFromString(dataNascitaString);
+			if (checkCondizioni) {
+			    Date dataNascita = DataUtils.convertiDataFromString(dataNascitaString);
 				Ruolo ruoloUtente = new Ruolo();
 				if (isStaff) {
 					ruoloUtente.setId(Costanti.ID_RUOLO_STAFF);
@@ -79,7 +86,9 @@ public class RegistrazioneServlet extends HttpServlet {
 					ruoloUtente.setNomeRuolo(Costanti.RUOLO_CLIENTE);
 				}
 				Utente utente = new Utente(email,password,nome,cognome,dataNascita,ruoloUtente);
+				System.out.println("sto prima di registrazione bl");
 				checkRegistrazione = businessLogicUtente.registrazione(utente);
+				System.out.println(checkRegistrazione + " registrazione");
 			
 			}
 		} catch (Exception e) {

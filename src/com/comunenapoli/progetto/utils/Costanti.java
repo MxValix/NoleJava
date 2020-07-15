@@ -38,5 +38,7 @@ public interface Costanti {
 	
 	public final static Integer ERRORE_GENERICO = -2;
 	public final static Integer MODIFICA_FALLITA = 0;
+	
+	public static final String LISTA_COMPLETA_AUTO = "listaCompletaAuto";
 
 }
