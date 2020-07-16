@@ -5,6 +5,10 @@ import java.time.LocalDate;
 
 import javax.persistence.EntityManager;
 
+import com.comunenapoli.progetto.businessLogic.BusinessLogicUtente;
+import com.comunenapoli.progetto.businessLogic.UtenteDao;
+import com.comunenapoli.progetto.model.Ruolo;
+import com.comunenapoli.progetto.model.Utente;
 
 public class BusinessLogicUtenteUtils {
 
