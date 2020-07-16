@@ -6,7 +6,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
+import com.comunenapoli.progetto.model.Auto;
 import com.comunenapoli.progetto.model.Noleggio;
+import com.comunenapoli.progetto.model.Utente;
 
 
 public class NoleggioDao implements DaoInterface<Noleggio> {
@@ -51,37 +53,36 @@ public class NoleggioDao implements DaoInterface<Noleggio> {
 		manager.remove(noleggio);
 	}
 
-	public List<Noleggio> findNoleggiByIdUtente(Integer idUtente) {
-		List<Noleggio> noleggi = manager.createQuery("select n from Noleggio n where n.utente_idUtente = :x",Noleggio.class).
-				setParameter("x",idUtente).getResultList();
+	public List<Noleggio> findNoleggiByUtente(Utente utente) {
+		List<Noleggio> noleggi = manager.createQuery("select n from Noleggio n where n.utente = :x",Noleggio.class).
+				setParameter("x",utente).getResultList();
 		return noleggi;
 	}
 	
-	public Noleggio findNoleggioByIdAuto(Integer idAuto) {
-		TypedQuery<Noleggio> query = manager.createQuery("select n from Noleggio n where n.auto_idAuto = :x",Noleggio.class);
-		Noleggio noleggio = query.
-				setParameter("x",idAuto).getSingleResult();
+	public Noleggio findNoleggioByAuto(Auto auto) {
+		TypedQuery<Noleggio> query = manager.createQuery("select n from Noleggio n where n.auto = :x",Noleggio.class);
+		Noleggio noleggio = query.setParameter("x",auto).getResultList().stream().findFirst().orElse(null);
 		return noleggio;
 	}
 	
 	public Noleggio findNoleggioByIdNoleggio(Integer idNoleggio) {
 		TypedQuery<Noleggio> query = manager.createQuery("select n from Noleggio n where n.idNoleggio = :x",Noleggio.class);
-		Noleggio noleggio = query.setParameter("x",idNoleggio).getSingleResult();
+		Noleggio noleggio = query.setParameter("x",idNoleggio).getResultList().stream().findFirst().orElse(null);
 		return noleggio;
 	}
 	
-	public boolean findNoleggioDisponibileByIdAuto(Integer idAuto, Date dataInizio){
-		TypedQuery<Noleggio> query = manager.createQuery("select n from Noleggio n where n.auto_idAuto = :x and n.dataFine >= :y",Noleggio.class);
-		Noleggio noleggio = query.setParameter("x",idAuto).setParameter("y",dataInizio).getSingleResult();
+	public boolean findNoleggioDisponibileByAuto(Auto auto, Date dataInizio){
+		TypedQuery<Noleggio> query = manager.createQuery("select n from Noleggio n where n.auto = :x and n.dataFine >= :y",Noleggio.class);
+		Noleggio noleggio = query.setParameter("x",auto).setParameter("y",dataInizio).getResultList().stream().findFirst().orElse(null);
 		if (noleggio!=null) {
 			return false;
 		}
 		return true;
 	}
 	
-	public List<Noleggio> findNoleggiByIdAuto(Integer idAuto) {
-		TypedQuery<Noleggio> query = manager.createQuery("select n from Noleggio n where n.auto_idAuto = :x",Noleggio.class);
-		List<Noleggio> noleggi = query.setParameter("x",idAuto).getResultList();
+	public List<Noleggio> findNoleggiByAuto(Auto auto) {
+		TypedQuery<Noleggio> query = manager.createQuery("select n from Noleggio n where n.auto = :x",Noleggio.class);
+		List<Noleggio> noleggi = query.setParameter("x",auto).getResultList();
 		return noleggi;
 	}
 

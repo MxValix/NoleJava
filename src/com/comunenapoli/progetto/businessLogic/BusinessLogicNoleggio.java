@@ -8,8 +8,10 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import com.comunenapoli.progetto.model.Auto;
 import com.comunenapoli.progetto.model.CalendarioChiusure;
 import com.comunenapoli.progetto.model.Noleggio;
+import com.comunenapoli.progetto.model.Utente;
 
 public class BusinessLogicNoleggio {
 
@@ -129,22 +131,22 @@ public class BusinessLogicNoleggio {
 	}
 	
 	
-	public void setDisponibilitaFalse(Integer idAuto) {
-		Noleggio noleggio = noleggioDao.findNoleggioByIdAuto(idAuto);
+	public void setDisponibilitaFalse(Auto auto) {
+		Noleggio noleggio = noleggioDao.findNoleggioByAuto(auto);
 		noleggio.setIsDisponibile(false);
 		update(noleggio);
 	}
 	
-	public void setDisponibilitaTrue(Integer idAuto) {
-		Noleggio noleggio = noleggioDao.findNoleggioByIdAuto(idAuto);
+	public void setDisponibilitaTrue(Auto auto) {
+		Noleggio noleggio = noleggioDao.findNoleggioByAuto(auto);
 		noleggio.setIsDisponibile(true);
 		update(noleggio);
 	}
 	
 	public boolean setNoleggioByCliente(Noleggio noleggio) {
-		Integer idAuto = noleggio.getAuto().getIdAuto();
+		Auto auto = noleggio.getAuto();
 		Date dataInizio = noleggio.getDataInizio();
-		boolean noleggioDisponibile = noleggioDao.findNoleggioDisponibileByIdAuto(idAuto, dataInizio);
+		boolean noleggioDisponibile = noleggioDao.findNoleggioDisponibileByAuto(auto, dataInizio);
 		if (noleggioDisponibile) {
 			noleggio.setIsDisponibile(false);
 			create(noleggio);
@@ -152,8 +154,8 @@ public class BusinessLogicNoleggio {
 		return noleggioDisponibile;
 	}	
 	
-	public boolean deleteNoleggiByIdUtente(Integer idUtente) {
-		List<Noleggio> noleggi = noleggioDao.findNoleggiByIdUtente(idUtente);
+	public boolean deleteNoleggiByIdUtente(Utente utente) {
+		List<Noleggio> noleggi = noleggioDao.findNoleggiByUtente(utente);
 		boolean checkEliminato = false;
 		if (noleggi!=null) {
 			for (int i=0; i<noleggi.size(); i++) {
@@ -193,9 +195,9 @@ public class BusinessLogicNoleggio {
 	}
 	
 	
-	public boolean deleteNoleggiByIdAuto(Integer idAuto) {
+	public boolean deleteNoleggiByIdAuto(Auto auto) {
 		//controllo sulla daa
-		List<Noleggio> noleggi = noleggioDao.findNoleggiByIdAuto(idAuto);
+		List<Noleggio> noleggi = noleggioDao.findNoleggiByAuto(auto);
 		Date dataCorrente = Date.valueOf(LocalDate.now());
 		boolean checkEliminato = false;
 		if (noleggi!=null) {

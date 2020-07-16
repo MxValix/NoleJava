@@ -1,5 +1,6 @@
 package com.comunenapoli.progetto.businessLogic;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -200,14 +201,13 @@ public class BusinessLogicUtente {
 	
 	public Integer registrazione (Utente utente) throws Exception {
 		String username = utente.getUsername();
+		Date dataNascita = utente.getDataNascita();
 		boolean checkUsername = utenteDao.checkUsername(username);
-		System.out.println(utente);
-		System.out.println(utente.getNome() + "nome");
-		if (!checkUsername) {
+		if (!checkUsername && DataUtils.dataDiNascita(dataNascita)) {
 			create(utente);
 			return Costanti.REGISTRAZIONE_VALIDA;
 		} else {
-			if (checkUsername) {
+			if (checkUsername && !DataUtils.dataDiNascita(dataNascita)) {
 				return Costanti.REGISTRAZIONE_FALLITA_UTENTE_ESISTENTE;
 			}
 			else {
@@ -237,7 +237,7 @@ public class BusinessLogicUtente {
 		return utente;
 	}
 
-
+	
 
 
 }

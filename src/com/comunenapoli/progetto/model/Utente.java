@@ -39,7 +39,6 @@ public class Utente {
 	private Set<Noleggio> noleggi = null;
 	
 	@OneToOne(mappedBy="utente")
-	@NotFound(action=NotFoundAction.IGNORE)
 	Patente patente = null;
 	
 	@OneToOne(mappedBy="utente")
@@ -229,102 +228,6 @@ public class Utente {
 	public void setCartaDiCredito(CartaDiCredito cartaDiCredito) {
 		this.cartaDiCredito = cartaDiCredito;
 	}
-
-
-
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((cartaDiCredito == null) ? 0 : cartaDiCredito.hashCode());
-		result = prime * result + ((cognome == null) ? 0 : cognome.hashCode());
-		result = prime * result + ((dataNascita == null) ? 0 : dataNascita.hashCode());
-		result = prime * result + ((idUtente == null) ? 0 : idUtente.hashCode());
-		result = prime * result + ((isVerificato == null) ? 0 : isVerificato.hashCode());
-		result = prime * result + ((noleggi == null) ? 0 : noleggi.hashCode());
-		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + ((patente == null) ? 0 : patente.hashCode());
-		result = prime * result + ((ruolo == null) ? 0 : ruolo.hashCode());
-		result = prime * result + ((username == null) ? 0 : username.hashCode());
-		return result;
-	}
-
-
-
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Utente other = (Utente) obj;
-		if (cartaDiCredito == null) {
-			if (other.cartaDiCredito != null)
-				return false;
-		} else if (!cartaDiCredito.equals(other.cartaDiCredito))
-			return false;
-		if (cognome == null) {
-			if (other.cognome != null)
-				return false;
-		} else if (!cognome.equals(other.cognome))
-			return false;
-		if (dataNascita == null) {
-			if (other.dataNascita != null)
-				return false;
-		} else if (!dataNascita.equals(other.dataNascita))
-			return false;
-		if (idUtente == null) {
-			if (other.idUtente != null)
-				return false;
-		} else if (!idUtente.equals(other.idUtente))
-			return false;
-		if (isVerificato == null) {
-			if (other.isVerificato != null)
-				return false;
-		} else if (!isVerificato.equals(other.isVerificato))
-			return false;
-		if (noleggi == null) {
-			if (other.noleggi != null)
-				return false;
-		} else if (!noleggi.equals(other.noleggi))
-			return false;
-		if (nome == null) {
-			if (other.nome != null)
-				return false;
-		} else if (!nome.equals(other.nome))
-			return false;
-		if (password == null) {
-			if (other.password != null)
-				return false;
-		} else if (!password.equals(other.password))
-			return false;
-		if (patente == null) {
-			if (other.patente != null)
-				return false;
-		} else if (!patente.equals(other.patente))
-			return false;
-		if (ruolo == null) {
-			if (other.ruolo != null)
-				return false;
-		} else if (!ruolo.equals(other.ruolo))
-			return false;
-		if (username == null) {
-			if (other.username != null)
-				return false;
-		} else if (!username.equals(other.username))
-			return false;
-		return true;
-	}
-
-
-
-
-	
 
 
 

@@ -16,6 +16,8 @@ import com.comunenapoli.progetto.businessLogic.CartaDiCreditoDao;
 import com.comunenapoli.progetto.businessLogic.NoleggioDao;
 import com.comunenapoli.progetto.businessLogic.PatenteDao;
 import com.comunenapoli.progetto.businessLogic.UtenteDao;
+import com.comunenapoli.progetto.model.Auto;
+import com.comunenapoli.progetto.model.Noleggio;
 import com.comunenapoli.progetto.utils.BusinessLogicRuoloUtils;
 import com.comunenapoli.progetto.utils.BusinessLogicUtenteUtils;
 import com.comunenapoli.progetto.utils.Costanti;
@@ -62,6 +64,10 @@ public class InitServlet extends HttpServlet {
 
 		BusinessLogicRuoloUtils.generaRuoli(entityManager);
 	    BusinessLogicUtenteUtils.creaAdmin(entityManager);
+	    Auto auto = new Auto("berlina","bmw","M3","A",12.00, "nero", 3, "DV854RT", "metano", 3.100, "ewff.img");
+	    Auto auto2 = new Auto("asadw","dwff","efewe","A",32.00, "nero", 2, "BP854RT", "benzina", 2.100, "dewdf.png");
+	    businessLogicAuto.create(auto);
+	    businessLogicAuto.create(auto2);
 	}
 	
 	

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,7 +41,7 @@ public class HomepageServlet extends HttpServlet {
 		response.setHeader("Cache-control", "no-store");
 		Utente utente = (Utente) request.getSession().getAttribute(Costanti.USER_IN_SESSION);
 		BusinessLogicNoleggio businessLogicNoleggio = (BusinessLogicNoleggio) getServletContext().getAttribute(Costanti.BUSINESS_LOGIC_NOLEGGIO);
-		BusinessLogicAuto businessLogicAuto = (BusinessLogicAuto) getServletContext().getAttribute(Costanti.BUSINESS_LOGIC_NOLEGGIO);
+		BusinessLogicAuto businessLogicAuto = (BusinessLogicAuto) getServletContext().getAttribute(Costanti.BUSINESS_LOGIC_AUTO);
 		List<Auto> listaAuto = new ArrayList<Auto>();
 		
 		//TODO campo nascosto obbligatorio con value form
@@ -58,7 +59,11 @@ public class HomepageServlet extends HttpServlet {
 			
 		}
 			
-	
+			System.out.println("Lista auto " + request.getSession().getAttribute(Costanti.LISTA_COMPLETA_AUTO));
+			RequestDispatcher requestDispatcher; 
+			requestDispatcher = request.getRequestDispatcher("/jsp/homepage.jsp");
+			requestDispatcher.forward(request, response);
+
 	}
 
 	private List<Auto> effettuaRicerca(HttpServletRequest request, BusinessLogicAuto businessLogicAuto, BusinessLogicNoleggio businessLogicNoleggio) {

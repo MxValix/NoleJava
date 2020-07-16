@@ -3,8 +3,10 @@ package com.comunenapoli.progetto.businessLogic;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 import com.comunenapoli.progetto.model.Patente;
+import com.comunenapoli.progetto.model.Utente;
 
 public class PatenteDao implements DaoInterface<Patente> {
 	
@@ -49,15 +51,15 @@ public class PatenteDao implements DaoInterface<Patente> {
 		manager.remove(patente);
 	}
 	
-	public Patente findPatenteByIdUtente(Integer idUtente) {
-		Patente patente = manager.createQuery("select p from Patente p where p.utente_idUtente = :x",Patente.class).
-				setParameter("x",idUtente).getSingleResult();
+	public Patente findPatenteByUtente(Utente utente) {
+		TypedQuery<Patente> query = manager.createQuery("select p from Patente p where p.utente = :x",Patente.class);
+		Patente patente = query.setParameter("x",utente).getResultList().stream().findFirst().orElse(null);
 		return patente;
 	}
 	
 	public Patente findPatenteByNumeroPatente(String numeroPatente) {
-		Patente patente = manager.createQuery("select p from Patente p where p.numeroPatente = :x",Patente.class).
-				setParameter("x",numeroPatente).getSingleResult();
+		TypedQuery<Patente> query = manager.createQuery("select p from Patente p where p.numeroPatente = :x",Patente.class);
+		Patente patente = query.setParameter("x",numeroPatente).getResultList().stream().findFirst().orElse(null);
 		return patente;
 	}
 	

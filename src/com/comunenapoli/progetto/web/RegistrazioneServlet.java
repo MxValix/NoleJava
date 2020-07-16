@@ -69,13 +69,14 @@ public class RegistrazioneServlet extends HttpServlet {
 		boolean checkDataNascita = dataNascitaString!=null && !dataNascitaString.equals("");
 		boolean checkEmail = email!=null && !email.equals("");
 		boolean checkPassword = password!=null && !password.equals("") && password.length()>=8;
-		boolean isStaff = staff!=null && !staff.equals("");
+		boolean isStaff = staff!=null;
 		boolean checkCondizioni = checkNome && checkCognome && checkDataNascita && checkEmail && checkPassword;		
 		Integer checkRegistrazione = Costanti.ERRORE_GENERICO;
 		System.out.println("effettua");
 		try {
-			if (checkCondizioni) {
-			    Date dataNascita = DataUtils.convertiDataFromString(dataNascitaString);
+		    Date dataNascita = DataUtils.convertiDataFromString(dataNascitaString);
+		    boolean checkMaggiorenne = DataUtils.dataDiNascita(dataNascita);
+			if (checkCondizioni && checkMaggiorenne) {
 				Ruolo ruoloUtente = new Ruolo();
 				if (isStaff) {
 					ruoloUtente.setId(Costanti.ID_RUOLO_STAFF);
@@ -86,10 +87,7 @@ public class RegistrazioneServlet extends HttpServlet {
 					ruoloUtente.setNomeRuolo(Costanti.RUOLO_CLIENTE);
 				}
 				Utente utente = new Utente(email,password,nome,cognome,dataNascita,ruoloUtente);
-				System.out.println("sto prima di registrazione bl");
-				checkRegistrazione = businessLogicUtente.registrazione(utente);
-				System.out.println(checkRegistrazione + " registrazione");
-			
+				checkRegistrazione = businessLogicUtente.registrazione(utente);			
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

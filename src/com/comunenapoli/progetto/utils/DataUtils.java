@@ -25,10 +25,10 @@ public class DataUtils {
 		return date;
 	}
 	
-	public static boolean dataDiNascita(String dataNascitaString) throws Exception {
+	public static boolean dataDiNascita(Date dataNascitaSql) throws Exception {
 		java.util.Date dateOggi = new java.util.Date();
 	    SimpleDateFormat formatter=new SimpleDateFormat("dd-MMM-yyyy");  
-	    java.util.Date dataNascita = formatter.parse(dataNascitaString);
+	    java.util.Date dataNascita = new java.util.Date(dataNascitaSql.getTime());
 		Integer confrontaAnno = dateOggi.getYear() - dataNascita.getYear();
 		if (confrontaAnno<18) {
 			return false;

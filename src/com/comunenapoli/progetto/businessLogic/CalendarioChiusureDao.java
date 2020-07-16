@@ -56,7 +56,7 @@ public class CalendarioChiusureDao implements DaoInterface<CalendarioChiusure> {
 		TypedQuery<CalendarioChiusure> query;
 		query = manager.createQuery("select c from CalendarioChisure c where c.dataInizio = :x and c.dataFine = :y",CalendarioChiusure.class);
 		query = query.setParameter("x",dataInizio).setParameter("y", dataFine);
-		CalendarioChiusure chiusura = query.getSingleResult();
+		CalendarioChiusure chiusura = query.getResultList().stream().findFirst().orElse(null);
 		return chiusura;
 	}
 	
@@ -66,7 +66,8 @@ public class CalendarioChiusureDao implements DaoInterface<CalendarioChiusure> {
 		TypedQuery<CalendarioChiusure> query;
 		query = manager.createQuery("select c from CalendarioChisure c where c.dataInizio < :x or c.dataFine > :y",CalendarioChiusure.class);
 		query = query.setParameter("x",dataInizio).setParameter("y", dataInizio);
-		boolean isAperto = query.getSingleResult() == null;
+		CalendarioChiusure calendarioChiusure = query.getResultList().stream().findFirst().orElse(null);
+		boolean isAperto = calendarioChiusure==null;
 		return isAperto;
 	}
 	

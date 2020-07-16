@@ -1,6 +1,7 @@
 package com.comunenapoli.progetto.web;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDateTime;
 
 import javax.servlet.ServletException;
@@ -32,16 +33,20 @@ public class NoleggioServlet extends HttpServlet {
 		response.setHeader("Last-modified", LocalDateTime.now().toString());
 		response.setHeader("Cache-control", "no-store");
 		Utente utente = (Utente) request.getSession().getAttribute(Costanti.USER_IN_SESSION);
-		Integer idUtente = utente.getIdUtente();
+		System.out.println(utente.toString());
+
 		BusinessLogicPatente businessLogicPatente = (BusinessLogicPatente) getServletContext().getAttribute(Costanti.BUSINESS_LOGIC_PATENTE);
 		BusinessLogicCarta businessLogicCarta = (BusinessLogicCarta) getServletContext().getAttribute(Costanti.BUSINESS_LOGIC_CARTA);
 		try {
-			Integer responsoPatente = businessLogicPatente.responsoPatente(idUtente);
-			Integer responsoCarta = businessLogicCarta.responsoCarta(idUtente);
+			Integer responsoPatente = businessLogicPatente.responsoPatente(utente);
+			Integer responsoCarta = businessLogicCarta.responsoCarta(utente);
+			String html = "";
 			if (responsoPatente == 1) {
 				//TODO patente valida, vai form carta
 				if (responsoCarta == 1) {
 					//TODO manda al form finale di noleggio
+					html = "<h1>Carta non esistente</h1>";
+
 				}
 				else if (responsoCarta == 0) {
 					//TODO carta scaduta, vai form aggiorna dati	
@@ -52,10 +57,17 @@ public class NoleggioServlet extends HttpServlet {
 			}
 			else if (responsoPatente == 0) {
 				//TODO patente scaduta, vai form aggiorna dati
+
 			}
 			else if (responsoPatente == -1) {
 				//TODO patente mai inserita, vai al form di inserimento dati patente
+				html = "<h1>Patente non esistente</h1>";
+
 			}
+			PrintWriter printWriter = response.getWriter();
+			printWriter.println(html);
+			printWriter.flush();
+			printWriter.close();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

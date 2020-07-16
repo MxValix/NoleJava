@@ -13,7 +13,7 @@
 		 <input type="text" placeholder="cognome" name="cognome" value=""><br>
 		<input type="date" placeholder="data di nascita" name="dataNascita" value=""><br>
 		<input type="text" placeholder="email" name="email" value=""> <br>
-		<input type="text" placeholder="password" name="password" value=""><br>
+		<input type="password" placeholder="password" name="password" value=""><br>
 		<label>Selezionare casella in caso di registrazione Staff</label><br>
 		<input type="checkbox" name="staff" value=""> <input type="submit" value="Registrati ora">
 	</form>

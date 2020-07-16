@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import com.comunenapoli.progetto.model.CartaDiCredito;
+import com.comunenapoli.progetto.model.Utente;
 
 public class CartaDiCreditoDao implements DaoInterface<CartaDiCredito> {
 	
@@ -49,15 +50,15 @@ public class CartaDiCreditoDao implements DaoInterface<CartaDiCredito> {
 		manager.remove(cartaDiCredito);
 	}
 	
-	public CartaDiCredito findCartaByIdUtente(Integer idUtente) {
-		CartaDiCredito carta = manager.createQuery("select c from CartaDiCredito c where c.utente_idUtente = :x",CartaDiCredito.class).
-				setParameter("x",idUtente).getSingleResult();
+	public CartaDiCredito findCartaByIdUtente(Utente utente) {
+		CartaDiCredito carta = manager.createQuery("select c from CartaDiCredito c where c.utente = :x",CartaDiCredito.class).
+				setParameter("x",utente).getResultList().stream().findFirst().orElse(null);
 		return carta;
 	}
 	
 	public CartaDiCredito findCartaByNumeroCarta(String numeroCarta) {
 		CartaDiCredito carta = manager.createQuery("select c from CartaDiCredito c where c.numeroCarta = :x",CartaDiCredito.class).
-				setParameter("x",numeroCarta).getSingleResult();
+				setParameter("x",numeroCarta).getResultList().stream().findFirst().orElse(null);
 		return carta;
 	}
 	

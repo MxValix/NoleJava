@@ -6,6 +6,7 @@ import java.text.ParseException;
 import javax.persistence.EntityManager;
 
 import com.comunenapoli.progetto.model.Patente;
+import com.comunenapoli.progetto.model.Utente;
 import com.comunenapoli.progetto.utils.DataUtils;
 
 
@@ -73,8 +74,9 @@ public class BusinessLogicPatente {
 
 	//crea la patente solo se l'utente non ne ha già una associata, e se nessun altro utente ha lo stesso numeroPatente associato
 	public boolean creaPatente(Patente patente) {
-		Integer idUtente = patente.getUtente().getIdUtente();
-		Patente patenteUtente = getPatenteByIdUtente(idUtente);
+		Utente utente = patente.getUtente();
+		Integer idUtente = utente.getIdUtente();
+		Patente patenteUtente = getPatenteByUtente(utente);
 		if (patenteUtente==null) {
 			String numeroPatente = patente.getNumeroPatente();
 			patenteUtente = patenteDao.findPatenteByNumeroPatente(numeroPatente);
@@ -87,8 +89,8 @@ public class BusinessLogicPatente {
 	}
 	
 	
-	public Patente getPatenteByIdUtente(Integer idUtente) {
-		Patente patente = patenteDao.findPatenteByIdUtente(idUtente);
+	public Patente getPatenteByUtente(Utente utente) {
+		Patente patente = patenteDao.findPatenteByUtente(utente);
 		return patente;
 	}
 	
@@ -97,8 +99,8 @@ public class BusinessLogicPatente {
 		return isDataValida;
 	}
 	
-	public Integer responsoPatente(Integer idUtente) throws Exception {
-		Patente patente = getPatenteByIdUtente(idUtente);
+	public Integer responsoPatente(Utente utente) throws Exception {
+		Patente patente = patenteDao.findPatenteByUtente(utente);
 		boolean isPatenteValida = false;
 		if (patente==null) {
 			return -1;

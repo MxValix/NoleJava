@@ -6,6 +6,7 @@ import java.text.ParseException;
 import javax.persistence.EntityManager;
 
 import com.comunenapoli.progetto.model.CartaDiCredito;
+import com.comunenapoli.progetto.model.Utente;
 import com.comunenapoli.progetto.utils.DataUtils;
 
 
@@ -73,8 +74,8 @@ public class BusinessLogicCarta {
 
 	//crea la carta solo se l'utente non ne ha già una associata, e se nessun altro utente ha lo stesso numeroCarta associato
 	public boolean creaCarta(CartaDiCredito carta) {
-		Integer idUtente = carta.getUtente().getIdUtente();
-		CartaDiCredito cartaUtente = getCartaByIdUtente(idUtente);
+		Utente utente = carta.getUtente();
+		CartaDiCredito cartaUtente = getCartaByUtente(utente);
 		if (cartaUtente==null) {
 			String numeroPatente = carta.getNumeroCarta();
 			cartaUtente = cartaDao.findCartaByNumeroCarta(numeroPatente);
@@ -87,8 +88,8 @@ public class BusinessLogicCarta {
 	}
 	
 	
-	public CartaDiCredito getCartaByIdUtente(Integer idUtente) {
-		CartaDiCredito carta = cartaDao.findCartaByIdUtente(idUtente);
+	public CartaDiCredito getCartaByUtente(Utente utente) {
+		CartaDiCredito carta = cartaDao.findCartaByIdUtente(utente);
 		return carta;
 	}
 	
@@ -97,8 +98,8 @@ public class BusinessLogicCarta {
 		return isDataValida;
 	}
 	
-	public Integer responsoCarta(Integer idUtente) throws Exception {
-		CartaDiCredito carta = getCartaByIdUtente(idUtente);
+	public Integer responsoCarta(Utente utente) throws Exception {
+		CartaDiCredito carta = getCartaByUtente(utente);
 		boolean isCartaValid = false;
 		if (carta==null) {
 			return -1;

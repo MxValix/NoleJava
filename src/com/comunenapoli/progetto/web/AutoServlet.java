@@ -3,6 +3,7 @@ package com.comunenapoli.progetto.web;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,10 +33,17 @@ public class AutoServlet extends HttpServlet {
 		response.setHeader("Last-modified", LocalDateTime.now().toString());
 		response.setHeader("Cache-control", "no-store");
 		BusinessLogicAuto businessLogicAuto = (BusinessLogicAuto) getServletContext().getAttribute(Costanti.BUSINESS_LOGIC_AUTO);
-		String idAutoString = request.getParameter("bottone");
+		String idAutoString = request.getParameter("idautobtn");
 		Integer idAuto = Integer.valueOf(idAutoString);
 		Auto auto = businessLogicAuto.getAutoByIdAuto(idAuto);
+		//String marca = "bmw";
+		//List<Auto> automobili = businessLogicAuto.getListaAutoConFiltri(marca,null,null);
+		//System.out.println("automobili: " + automobili);
 		request.getSession().setAttribute(Costanti.AUTO_IN_SESSION, auto);
+		RequestDispatcher requestDispatcher; 
+		requestDispatcher = request.getRequestDispatcher("/jsp/auto.jsp");
+		requestDispatcher.forward(request, response);
+		
 	}
 	
 

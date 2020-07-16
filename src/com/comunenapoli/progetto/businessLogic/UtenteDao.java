@@ -62,7 +62,7 @@ public class UtenteDao implements DaoInterface<Utente> {
 	
 	public Integer findRuoloByIdUtente(Integer idUtente) {
 		Utente utente = manager.createQuery("select u from Utente u where u.idUtente = :x ",Utente.class).
-				setParameter("x",idUtente).getSingleResult();
+				setParameter("x",idUtente).getResultList().stream().findFirst().orElse(null);
 		return utente.getRuolo().getId();
 	}
 	
@@ -77,7 +77,7 @@ public class UtenteDao implements DaoInterface<Utente> {
 	public boolean checkVerificaById(Integer idUtente){
 		boolean isPresente = false;
 		Utente utente = manager.createQuery("select u from Utente u where u.idUtente = :x",Utente.class).
-				setParameter("x",idUtente).getSingleResult();
+				setParameter("x",idUtente).getResultList().stream().findFirst().orElse(null);
 		if (utente!=null) {
 			isPresente = utente.getIsVerificato();
 		}
@@ -86,7 +86,7 @@ public class UtenteDao implements DaoInterface<Utente> {
 
 	public Utente findUtenteByIdUtente(Integer idUtente) {
 		Utente utente = manager.createQuery("select u from Utente u where u.idUtente = :x",Utente.class).
-				setParameter("x",idUtente).getResultList().get(0);
+				setParameter("x",idUtente).getResultList().stream().findFirst().orElse(null);
 		return utente;
 	}
 	

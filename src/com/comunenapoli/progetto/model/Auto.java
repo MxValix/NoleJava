@@ -38,12 +38,12 @@ public class Auto implements Serializable{
 	private Noleggio noleggio =null;
 	
 	public Auto() {
-		this(null,null,null,null,null,null,null,null,null,null,null,null);
+		this(null,null,null,null,null,null,null,null,null,null,null);
 	}
 	
 
 	public Auto(String tipologiaAuto, String marca, String modello, String cambio, Double cilindrata, String colore,
-			Integer numeroPosti, String targa, String tipoCarburante, Double prezzoPerGiorno, String urlImg, Noleggio noleggio) {
+			Integer numeroPosti, String targa, String tipoCarburante, Double prezzoPerGiorno, String urlImg) {
 		this.tipologiaAuto = tipologiaAuto;
 		this.marca = marca;
 		this.modello = modello;
@@ -55,7 +55,6 @@ public class Auto implements Serializable{
 		this.tipoCarburante = tipoCarburante;
 		this.prezzoPerGiorno = prezzoPerGiorno;
 		this.urlImg = urlImg;
-		this.noleggio = noleggio;
 	}
 
 
