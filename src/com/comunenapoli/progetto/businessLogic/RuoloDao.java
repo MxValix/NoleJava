@@ -34,11 +34,6 @@ public class RuoloDao implements DaoInterface<Ruolo> {
 		manager.persist(ruolo);
 	}
 
-	@Override
-	public List<Ruolo> retrieve() {
-		List<Ruolo> ruoli = manager.createQuery("from Ruolo",Ruolo.class).getResultList();
-		return ruoli;
-	}
 
 	@Override
 	public void update(Ruolo ruolo) {
